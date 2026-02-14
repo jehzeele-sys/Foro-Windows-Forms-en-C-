@@ -1,0 +1,61 @@
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+
+namespace AgendaContactos
+{
+    public partial class Form1 : Form
+    {
+        // Lista para almacenar contactos
+        private List<Contacto> listaContactos = new List<Contacto>();
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        // Botón Agregar
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            // Validación
+            if (txtNombre.Text == "" || txtTelefono.Text == "" || txtCorreo.Text == "")
+            {
+                MessageBox.Show("Todos los campos son obligatorios.");
+                return;
+            }
+
+            // Crear contacto
+            Contacto nuevo = new Contacto(
+                txtNombre.Text,
+                txtTelefono.Text,
+                txtCorreo.Text
+            );
+
+            // Agregar a la lista
+            listaContactos.Add(nuevo);
+
+            // Mostrar en ListBox
+            lstContactos.Items.Add(nuevo);
+
+            // Limpiar campos
+            txtNombre.Clear();
+            txtTelefono.Clear();
+            txtCorreo.Clear();
+        }
+
+        // Botón Eliminar
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (lstContactos.SelectedIndex == -1)
+            {
+                MessageBox.Show("Seleccione un contacto para eliminar.");
+                return;
+            }
+
+            int indice = lstContactos.SelectedIndex;
+
+            listaContactos.RemoveAt(indice);
+            lstContactos.Items.RemoveAt(indice);
+        }
+    }
+}
